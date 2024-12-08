@@ -1,12 +1,14 @@
 # AB InBev Data Engineering Case
 
-**IMPORTANT**: Before diving into this repository, please read the detailed documentation in the file [leiame primeiro.pdf](leiame%20primeiro.pdf), where all decisions and processes are thoroughly explained.
-
+**IMPORTANT**: Before diving into this repository, 
+               please read the detailed documentation 
+			   in the file [leiame primeiro.pdf](leiame%20primeiro.pdf), where all decisions and processes are thoroughly explained.
+**OTHER**: In the docs/ folder there is documentation called additional_docs.md, where I suggest more steps for this project, such as data-marts, databases and data science
 ---
 
 ## Pipeline Diagram
 
-![Pipeline Diagram](docs/pipeline_solution.jpg)
+![Pipeline Diagram](docs/solution.jpg)
 
 ---
 
