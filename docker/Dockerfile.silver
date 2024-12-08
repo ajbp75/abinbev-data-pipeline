@@ -1,0 +1,35 @@
+# Use uma imagem oficial do Spark com Hadoop
+FROM bitnami/spark:latest
+
+# Executar comandos como root temporariamente para permissões de sistema
+USER root
+
+# Instalar dependências necessárias
+RUN rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/lib/apt/lists/partial && \
+    apt-get update && \
+    apt-get install -y python3-pip wget && \
+    pip3 install --no-cache-dir azure-storage-blob
+
+# Adicionar o conector do Hadoop para Azure Blob Storage
+RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-azure/3.3.6/hadoop-azure-3.3.6.jar -P /opt/bitnami/spark/jars/ && \
+    wget https://repo1.maven.org/maven2/com/microsoft/azure/azure-storage/8.6.6/azure-storage-8.6.6.jar -P /opt/bitnami/spark/jars/
+
+# Voltar para o usuário padrão do Spark
+USER 1001
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Copiar o script para o contêiner
+COPY silver.py /app/silver.py
+
+# Definir as variáveis de ambiente para credenciais sensíveis
+# Recomenda-se configurar essas variáveis no runtime (usando `docker run -e` ou um arquivo .env)
+ENV ACCOUNT_NAME=abinbevajbpstoragedl \
+    CONTAINER_NAME=abinbev \
+    ACCOUNT_KEY=seu_account_key \
+    CONNECTION_STRING=seu_connection_string
+
+# Comando para executar o script
+CMD ["spark-submit", "/app/silver.py"]
